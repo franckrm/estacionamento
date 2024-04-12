@@ -42,12 +42,10 @@ class Usuarios extends CI_Controller{
 				$data = array(
 					'titulo' => 'Editar Usuário',
 					'sub_titulo' => 'Chegou a hora de editar o usuário',
-					'usuarios'=> $this->ion_auth->user($usuario_id)->row(),
+					'usuario'=> $this->ion_auth->user($usuario_id)->row(),
+					'icone_view'=> 'ik ik-user'
 					
 				);
-				echo "<pre>";
-				print_r( $this->ion_auth->user($usuario_id)->row());
-				die;
 				$this->load->view('layout/header', $data);
 				$this->load->view('usuarios/core');
 				$this->load->view('layout/footer');
