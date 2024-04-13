@@ -45,10 +45,17 @@ class Usuarios extends CI_Controller
 				$data = array(
 					'titulo' => 'Editar Usuário',
 					'sub_titulo' => 'Chegou a hora de editar o usuário',
+					'icone_view' => 'ik ik-user',
 					'usuario' => $this->ion_auth->user($usuario_id)->row(),
-					'icone_view' => 'ik ik-user'
+					'perfil_usuario' =>  $this->ion_auth->get_users_groups($usuario_id)->row()
+
 
 				);
+
+				// echo '<pre>';
+				// print_r($data['perfil_usuario']);
+				// exit();
+
 				$this->load->view('layout/header', $data);
 				$this->load->view('usuarios/core');
 				$this->load->view('layout/footer');
