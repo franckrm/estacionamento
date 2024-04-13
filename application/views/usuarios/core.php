@@ -43,10 +43,12 @@
 									<div class="col-md-6 mb-20">
 										<label>Nome</label>
 										<input type="text" class="form-control" name="first_name" value="<?php echo (isset($usuario) ? $usuario->first_name : set_value('first_name')) ?>">
+										<?php echo form_error('first_name', '<div class="text-danger">', '</div>'); ?>
 									</div>
 									<div class="col-md-6 mb-20">
 										<label>Sobrenome</label>
 										<input type="text" class="form-control" name="last_name" value="<?php echo (isset($usuario) ? $usuario->last_name : set_value('last_name')) ?>">
+										<?php echo form_error('last_name', '<div class="text-danger">', '</div>'); ?>
 									</div>
 								</div>
 
@@ -54,10 +56,12 @@
 									<div class="col-md-6 mb-20">
 										<label>Usuário</label>
 										<input type="text" class="form-control" name="username" value="<?php echo (isset($usuario) ? $usuario->username : set_value('username')) ?>">
+										<?php echo form_error('username', '<div class="text-danger">', '</div>'); ?>
 									</div>
 									<div class="col-md-6 mb-20">
 										<label>E-mail (Login)</label>
 										<input type="text" class="form-control" name="email" value="<?php echo (isset($usuario) ? $usuario->email : set_value('email')) ?>">
+										<?php echo form_error('email', '<div class="text-danger">', '</div>'); ?>
 									</div>
 								</div>
 
@@ -65,10 +69,12 @@
 									<div class="col-md-6 mb-20">
 										<label>Senha</label>
 										<input type="password" class="form-control" name="password" value="">
+										<?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
 									</div>
 									<div class="col-md-6 mb-20">
 										<label>Confirmação</label>
 										<input type="password" class="form-control" name="confirmacao">
+										<?php echo form_error('confirmacao', '<div class="text-danger">', '</div>'); ?>
 									</div>
 								</div>
 
