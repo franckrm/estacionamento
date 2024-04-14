@@ -108,7 +108,7 @@
 								<?php if (isset($usuario)) : ?>
 									<div class="form-group row">
 										<div class="col-md-12">
-											<input type="hidden" class="form-control" name="usuario_id" value="<?php $usuario->id ?>">
+											<input type="hidden" class="form-control" name="usuario_id" value="<?php echo $usuario->id ?>">
 										</div>
 									</div>
 								<?php endif; ?>
