@@ -43,6 +43,8 @@ class Usuarios extends CI_Controller
 			} else {
 				//Editar usuário
 
+				$perfil_atual = $this->ion_auth->get_users_groups($usuario_id)->row();
+				
 				$this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[5]|max_length[20]');
 				$this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[5]|max_length[20]');
 				$this->form_validation->set_rules('username', 'Usuário', 'trim|required|min_length[5]|max_length[30]|callback_username_check');
@@ -84,6 +86,14 @@ class Usuarios extends CI_Controller
 					$data = html_escape($data);
 
 					if($this->ion_auth->update($usuario_id, $data)){
+
+						$perfil_post = $this->input->post('perfil');
+						//Se for diferente atualiza o grupo
+						if($perfil_atual->id != $perfil_post){
+							$this->ion_auth->remove_from_group($perfil_atual->id, $usuario_id);
+							$this->ion_auth->add_to_group($perfil_post, $usuario_id);
+						}
+
 						$this->session->set_flashdata('sucesso', 'Dados atualizados com sucesso');
 					}else{
 						$this->session->set_flashdata('error', 'Não foi possível atualizar os dados');
