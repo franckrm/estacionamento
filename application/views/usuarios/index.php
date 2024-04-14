@@ -43,7 +43,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
-					<div class="card-header"><a class="btn btn-success" href="">+ Novo</a></div>
+					<div class="card-header"><a  data-toggle="tooltip" data-placement="right" title="Cadastrar usuário" class="btn btn-success" href="<?php echo base_url($this->router->fetch_class().'/'.'core')?>">+ Novo</a></div>
 					<div class="card-body">
 						<table class="table data-table">
 							<thead>
