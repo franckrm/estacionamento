@@ -52,8 +52,47 @@ class Usuarios extends CI_Controller
 				$this->form_validation->set_rules('confirmacao', 'Confirmação', 'trim|matches[password]');
 
 				if ($this->form_validation->run()) {
-					echo '<pre>';
-					print_r($this->input->post());
+					// [first_name] => Admin
+					// [last_name] => istrator
+					// [username] => administrator
+					// [email] => admin@admin.com
+					// [password] => 
+					// [confirmacao] => 
+					// [perfil] => 1
+					// [active] => 1
+					// [usuario_id] => 1
+
+					$data = elements(
+						array(
+							'first_name',
+							'last_name',
+							'username',
+							'email',
+							'password',
+							'active'
+						),
+						$this->input->post() 
+					);
+
+					$password = $this->input->post('password');
+
+					//Não atualiza a senha
+					if(!$password){
+						unset($data['password']);
+					}
+
+					$data = html_escape($data);
+
+					if($this->ion_auth->update($usuario_id, $data)){
+						$this->session->set_flashdata('sucesso', 'Dados atualizados com sucesso');
+					}else{
+						$this->session->set_flashdata('error', 'Não foi possível atualizar os dados');
+					}
+
+					redirect($this->router->fetch_class());
+
+
+					print_r($data);
 				} else {
 					//Erro da validação
 
