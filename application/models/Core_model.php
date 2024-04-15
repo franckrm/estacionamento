@@ -64,7 +64,7 @@ class Core_model extends CI_Model
 			if($this->db->delete($table, $condition)){
 				$this->session->set_flashdata('sucesso', 'Registro excluido com sucesso!');
 			}else{
-				$this->session->set_flashdata('erro', 'Não foi possível excluir o registro sucesso!');
+				$this->session->set_flashdata('error', 'Não foi possível excluir o registro sucesso!');
 			}
 		}else{
 			return false;
