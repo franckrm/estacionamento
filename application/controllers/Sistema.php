@@ -13,22 +13,49 @@ class Sistema extends CI_Controller{
 	}
 
 	public function index(){
-		$data = array(
-			'titulo' => 'Editar Informações do sistema',
-			'sub_titulo' => 'Chegou a hora de editar as informações do  sisterma',
-			'icone_view' => 'ik ik-settings',
-			'scripts'=>array(
-				'plugins/mask/jquery.mask.min.js',
-				'plugins/mask/custom.js'
-			),
-			'sistema' => $this->core_model->get_by_id('sistema', array('sistema_id'=> 1))
 
-		);
+		$this->form_validation->set_rules('sistema_razao_social', 'Razão social', 'trim|required|min_length[5]|max_length[145]');
+		$this->form_validation->set_rules('sistema_nome_fantasia', 'Nome fantasia', 'trim|required|min_length[5]|max_length[145]');
+		$this->form_validation->set_rules('sistema_cnpj', 'CPNJ', 'trim|required|exact_length[18]');
+		$this->form_validation->set_rules('sistema_ie', 'Inscrição estadual', 'trim|required|min_length[5]|max_length[25]');
+		$this->form_validation->set_rules('sistema_telefone_fixo', 'Telefone fixo', 'trim|required|exact_length[14]');
+		$this->form_validation->set_rules('sistema_telefone_movel', 'Telefone móvel', 'trim|required|min_length[14]|max_length[15]');
+		$this->form_validation->set_rules('sistema_cep', 'CEP', 'trim|required|exact_length[9]');
+		$this->form_validation->set_rules('sistema_endereco', 'Endereço', 'trim|required|min_length[5]|max_length[145]');
+		$this->form_validation->set_rules('sistema_numero', 'Número', 'trim|required|min_length[1]|max_length[30]');
+		$this->form_validation->set_rules('sistema_cidade', 'Cidade', 'trim|required|min_length[4]|max_length[50]');
+		$this->form_validation->set_rules('sistema_estado', 'UF', 'trim|required|exact_length[2]');
+		$this->form_validation->set_rules('sistema_site_url', 'URL do site', 'trim|required|max_length[100]|valid_url');
+		$this->form_validation->set_rules('sistema_email', 'Email de contato', 'trim|required|valid_email|max_length[100]');
+		$this->form_validation->set_rules('sistema_texto_ticket', 'Ticket do estacionamento', 'trim|max_length[500]');
 
-		//var_dump($data['sistema']); die;
 
-		$this->load->view('layout/header', $data);
-		$this->load->view('sistema/index');
-		$this->load->view('layout/footer');
+
+
+	
+
+		if($this->form_validation->run()){
+			var_dump($this->input->post()); die;
+		}else{
+			$data = array(
+				'titulo' => 'Editar Informações do sistema',
+				'sub_titulo' => 'Chegou a hora de editar as informações do  sisterma',
+				'icone_view' => 'ik ik-settings',
+				'scripts'=>array(
+					'plugins/mask/jquery.mask.min.js',
+					'plugins/mask/custom.js'
+				),
+				'sistema' => $this->core_model->get_by_id('sistema', array('sistema_id'=> 1))
+	
+			);
+	
+			//var_dump($data['sistema']); die;
+	
+			$this->load->view('layout/header', $data);
+			$this->load->view('sistema/index');
+			$this->load->view('layout/footer');
+		}
+
+		
 	}
 }
