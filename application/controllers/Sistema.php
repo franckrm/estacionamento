@@ -35,7 +35,31 @@ class Sistema extends CI_Controller{
 	
 
 		if($this->form_validation->run()){
-			var_dump($this->input->post()); die;
+
+			$data = elements(
+				array(
+					'sistema_razao_social',
+					'sistema_nome_fantasia',
+					'sistema_cnpj',
+					'sistema_ie',
+					'sistema_telefone_fixo',
+					'sistema_telefone_movel',
+					'sistema_cep',
+					'sistema_endereco',
+					'sistema_numero',
+					'sistema_cidade',
+					'sistema_estado',
+					'sistema_site_url',
+					'sistema_email',
+					'sistema_texto_ticket'
+				), 
+				$this->input->post()
+			);
+			
+			$data = html_escape($data);
+			$this->core_model->update('sistema', $data, array('sistema_id'=>1));
+			redirect($this->router->fetch_class());
+
 		}else{
 			$data = array(
 				'titulo' => 'Editar Informações do sistema',

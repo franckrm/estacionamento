@@ -32,7 +32,7 @@
 				
 				<div class="nav-lavel">Administração</div>
 				<div class="nav-item">
-					<a data-toggle="tooltip" data-placement="bottom" title="Gerenciar Usuários" href="<?php echo base_url('usuario') ?>"><i class="ik ik-users"></i><span>Gerenciar Usuários</span></a>
+					<a data-toggle="tooltip" data-placement="bottom" title="Gerenciar Usuários" href="<?php echo base_url('usuarios') ?>"><i class="ik ik-users"></i><span>Gerenciar Usuários</span></a>
 				</div>
 				<div class="nav-item">
 					<a data-toogle="tooltip" data-placement="bottom" title="Gerenciar sistema" href="<?php echo base_url('sistema')?>"><i class="ik ik-settings"></i><span>Gerenciar sistema</span></a>
