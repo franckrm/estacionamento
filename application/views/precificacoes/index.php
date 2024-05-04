@@ -9,7 +9,7 @@
 			<div class="row align-items-end">
 				<div class="col-lg-8">
 					<div class="page-header-title">
-						<i class="ik ik-users bg-blue"></i>
+                    <i class="<?php echo $icone_view; ?> bg-blue"></i>
 						<div class="d-inline">
 							<h5><?php echo $titulo;?></h5>
 							<span><?php echo $sub_titulo;?></span>
@@ -55,36 +55,36 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
-					<div class="card-header d-block"><a  data-toggle="tooltip" data-placement="right" title="Cadastrar usuário" class="btn bg-blue float-right text-white" href="<?php echo base_url($this->router->fetch_class().'/'.'core')?>">+ Novo</a></div>
+					<div class="card-header d-block"><a  data-toggle="tooltip" data-placement="right" title="Cadastrar precificações" class="btn bg-blue float-right text-white" href="<?php echo base_url($this->router->fetch_class().'/'.'core')?>">+ Novo</a></div>
 					<div class="card-body">
 						<table class="table data-table">
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Usuários</th>
-									<th>E-mail</th>
-									<th>Nome</th>
-                                    <th>Perfil de acesso</th>
-                                    <th>Ativo</th>
+									<th>Categoria</th>
+									<th>Valor da hora</th>
+									<th>Valor mensalidade</th>
+                                    <th class="text-center">Numero da vagas</th>
+                                    <th>Ativa</th>
 									<th class="nosort text-right pr-25">Ações</th>
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach($usuarios as $user): ?>
+								<?php foreach($precificacoes as $categoria): ?>
 									<tr>
-										<td><?php echo $user->id ?></td>
-										<td><?php echo $user->username ?></td>
-										<td><?php echo $user->email ?></td>
-										<td><?php echo $user->first_name ?></td>
-                                        <td><?php echo ($this->ion_auth->is_admin($user->id) ? 'Administrador' : 'Atendente') ?></td>
-										<td><?php echo ($user->active?'<span class="badge badge-pill badge-success mb-1"><i class="fas fa-lock-open"></i> Sim</span>': '<span class="badge badge-pill badge-warning mb-1"><i class="fas fa-lock"></i> Não</span>'); ?></td>
+										<td><?php echo $categoria->precificacao_id; ?></td>
+										<td><?php echo $categoria->precificacao_categoria; ?></td>
+										<td><?php echo 'R$ '.$categoria->precificacao_valor_hora; ?></td>
+                                        <td><?php echo 'R$ '.$categoria->precificacao_valor_mensalidade; ?></td>
+										<td class="text-center"><?php echo $categoria->precificacao_numero_vagas; ?></td>
+										<td><?php echo ($categoria->precificacao_ativa == 1 ? '<span class="badge badge-pill badge-success mb-1"><i class="fas fa-lock-open"></i> Sim</span>': '<span class="badge badge-pill badge-warning mb-1"><i class="fas fa-lock"></i> Não</span>'); ?></td>
 										<td class="text-right">
-											<a data-toggle="tooltip" data-placement="bottom" title="Editar <?php echo $this->router->fetch_class();?>" href="<?php echo base_url($this->router->fetch_class().'/core/'.$user->id)?>" class="btn btn-icon btn-primary"><i class="ik ik-edit-2"></i></a>
-											<button  type="button" title="Excluir <?php echo $this->router->fetch_class();?>" class="btn btn-icon btn-danger"  data-toggle="modal" data-target="#user-<?php echo $user->id ?>"><i class="ik ik-trash-2"></i></button> 
+											<a data-toggle="tooltip" data-placement="bottom" title="Editar <?php echo $this->router->fetch_class();?>" href="<?php echo base_url($this->router->fetch_class().'/core/'.$categoria->precificacao_id)?>" class="btn btn-icon btn-primary"><i class="ik ik-edit-2"></i></a>
+											<button  type="button" title="Excluir <?php echo $this->router->fetch_class();?>" class="btn btn-icon btn-danger"  data-toggle="modal" data-target="#categoria-<?php echo $categoria->precificacao_id ?>"><i class="ik ik-trash-2"></i></button> 
 											
 										</td>
 									</tr>
-									<div class="modal fade" id="user-<?php echo $user->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
+									<div class="modal fade" id="categoria-<?php echo $categoria->precificacao_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
 										<div class="modal-dialog modal-dialog-centered" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -96,7 +96,7 @@
 												</div>
 												<div class="modal-footer">
 													<button data-toggle="tooltip" data-placement="bottom" title="Cancelar Exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
-													<a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class();?>" href="<?php echo base_url($this->router->fetch_class().'/del/'.$user->id)?>" class="btn btn-danger">Sim, excluir</a>
+													<a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class();?>" href="<?php echo base_url($this->router->fetch_class().'/del/'.$categoria->precificacao_id)?>" class="btn btn-danger">Sim, excluir</a>
 												</div>
 											</div>
 										</div>
