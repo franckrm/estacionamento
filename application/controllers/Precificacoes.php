@@ -43,7 +43,48 @@ class Precificacoes extends CI_Controller
     public function core($precificacao_id = NULL)
 	{
         if(!$precificacao_id){
-            //Cadastrando
+            $this->form_validation->set_rules('precificacao_categoria', 'Categoria', 'trim|required|min_length[5]|max_length[35]|is_unique[precificacoes.precificacao_categoria]');
+            $this->form_validation->set_rules('precificacao_valor_hora', 'Valor hora', 'trim|required|max_length[50]');
+            $this->form_validation->set_rules('precificacao_valor_mensalidade', 'Valor mensalidade', 'trim|required|max_length[50]');
+            $this->form_validation->set_rules('precificacao_numero_vagas', 'Número vagas', 'trim|required|integer|greater_than[0]');
+            
+            if($this->form_validation->run()){
+                $preficicacao_ativa = $this->input->post('precificacao_ativa');
+
+                $data = elements(
+                    array(
+                        'precificacao_categoria',
+                        'precificacao_valor_hora',
+                        'precificacao_valor_mensalidade',
+                        'precificacao_numero_vagas',
+                        'precificacao_ativa',
+                    ), $this->input->post()
+                );
+
+                $data = html_escape($data);
+
+                $this->core_model->insert('precificacoes', $data);
+                redirect($this->router->fetch_class());
+
+
+            }else{
+                $data = array(
+                    'titulo' => 'Cadastrar preficicação',
+                    'sub_titulo' => 'Chegou a hora de cadastrar precificação',
+                    'icone_view'=> 'fas fa-dollar-sign',
+                    'scripts' => array(
+                        'plugins/mask/jquery.mask.min.js',
+                        'plugins/mask/custom.js'
+                    )
+                );
+
+             
+                $this->load->view('layout/header', $data);
+                $this->load->view('precificacoes/core');
+                $this->load->view('layout/footer');
+            }
+
+
         }else{
             //Atualizando
             if(!$this->core_model->get_by_id('precificacoes', array('precificacao_id'=>$precificacao_id ))){
@@ -95,9 +136,6 @@ class Precificacoes extends CI_Controller
             
                     );
     
-                    // echo "<pre>";
-                    // print_r($data['precificacao']);
-                    // exit();
                  
                     $this->load->view('layout/header', $data);
                     $this->load->view('precificacoes/core');
