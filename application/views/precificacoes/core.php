@@ -65,10 +65,10 @@
 
                                     <div class="col-md-2 mb-20">
 										<label>Ativar</label>
-										<select class="form-control" name="preficicacao_ativa">
-                                            <?php if(isset($preficicacao)):?>
-                                                <option value="0" <?php echo ($preficicacao->precificacao_ativa ==0?'selected': '') ?> >Não</option>
-                                                <option value="1" <?php echo ($preficicacao->precificacao_ativa ==1?'selected': '') ?> >Sim</option>
+										<select class="form-control" name="precificacao_ativa">
+                                            <?php if(isset($precificacao)):?>
+                                                <option value="0" <?php echo ($precificacao->precificacao_ativa ==0?'selected': '') ?> >Não</option>
+                                                <option value="1" <?php echo ($precificacao->precificacao_ativa ==1?'selected': '') ?> >Sim</option>
                                             <?php else: ?>
                                                 <option value="0">Não</option>
                                                 <option value="1">Sim</option>
