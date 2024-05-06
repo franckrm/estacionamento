@@ -90,7 +90,7 @@
 												</div>
 												<div class="modal-footer">
 													<button data-toggle="tooltip" data-placement="bottom" title="Cancelar Exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
-													<a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class();?>" href="<?php echo base_url($this->router->fetch_class().'/del/'.$forma->precificacao_id)?>" class="btn btn-danger">Sim, excluir</a>
+													<a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class();?>" href="<?php echo base_url($this->router->fetch_class().'/del/'.$forma->forma_pagamento_id)?>" class="btn btn-danger">Sim, excluir</a>
 												</div>
 											</div>
 										</div>
