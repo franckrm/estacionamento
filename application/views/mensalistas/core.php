@@ -42,7 +42,7 @@
 								<div class="form-group row">
 									<div class="col-md-4 mb-20">
 										<label>Nome</label>
-										<input type="text" class="form-control" name="first_name" value="<?php echo (isset($mensalista) ? $mensalista->mensalista_nome : set_value('mensalista_nome')) ?>">
+										<input type="text" class="form-control" name="mensalista_nome" value="<?php echo (isset($mensalista) ? $mensalista->mensalista_nome : set_value('mensalista_nome')) ?>">
 										<?php echo form_error('mensalista_nome', '<div class="text-danger">', '</div>'); ?>
 									</div>
 									<div class="col-md-8 mb-20">
@@ -77,7 +77,7 @@
                                 <div class="form-group row">
 									<div class="col-md-2 mb-20">
 										<label>Telefone fixo</label>
-										<input type="text" class="form-control sp_celphones" name="mensalista_telefone_fixo" value="<?php echo (isset($mensalista) ? $mensalista->mensalista_telefone_fixo : set_value('mensalista_telefone_fixo')) ?>">
+										<input type="text" class="form-control phone_with_ddd" name="mensalista_telefone_fixo" value="<?php echo (isset($mensalista) ? $mensalista->mensalista_telefone_fixo : set_value('mensalista_telefone_fixo')) ?>">
 										<?php echo form_error('mensalista_telefone_fixo', '<div class="text-danger">', '</div>'); ?>
 									</div>
 									<div class="col-md-2 mb-20">
