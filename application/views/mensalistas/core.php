@@ -148,7 +148,8 @@
                                     <div class="col-md-6 mb-20">
 										<label>Observações</label>
 										<textarea rows="1" class="form-control" name="mensalista_observacao"><?php echo (isset($mensalista) ? $mensalista->mensalista_observacao : set_value('mensalista_observacao')) ?></textarea>
-									</div>
+                                        <?php echo form_error('mensalista_observacao', '<div class="text-danger">', '</div>'); ?>
+                                    </div>
 
 								</div>
                             

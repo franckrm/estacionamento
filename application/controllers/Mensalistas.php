@@ -63,10 +63,19 @@ class Mensalistas extends CI_Controller
                 if(!empty($mensalista_telefone_fixo)){
                     $this->form_validation->set_rules('mensalista_telefone_fixo', 'Telefone fixo', 'trim|exact_length[14]|callback_check_telefone_fixo');
                 }
-
-               
+                 
                 $this->form_validation->set_rules('mensalista_telefone_movel', 'Telefone móvel', 'trim|min_length[14]|max_length[15]|callback_check_telefone_movel');
                
+               $this->form_validation->set_rules('mensalista_cep', 'CEP', 'trim|exact_length[9]');
+                $this->form_validation->set_rules('mensalista_endereco', 'Endereço', 'trim|required|min_length[4]|max_length[150]');
+                $this->form_validation->set_rules('mensalista_numero', 'Número', 'trim|required|max_length[20]');
+                $this->form_validation->set_rules('mensalista_bairro', 'Bairro', 'trim|required|min_length[4]|max_length[45]');
+                $this->form_validation->set_rules('mensalista_cidade', 'Cidade', 'trim|required|min_length[4]|max_length[80]');
+                $this->form_validation->set_rules('mensalista_estado', 'UF', 'trim|required|exact_length[2]');
+                $this->form_validation->set_rules('mensalista_complemento', 'Complemento', 'trim|max_length[145]');
+                $this->form_validation->set_rules('mensalista_dia_vencimento', 'Dia vencimento mensalidade', 'trim|integer|greater_than[0]|less_than[32]');
+                $this->form_validation->set_rules('mensalista_observacao', 'Observações', 'trim|max_length[500]');
+
                 if($this->form_validation->run()){
                     echo "validou";
                     echo "<pre>";
