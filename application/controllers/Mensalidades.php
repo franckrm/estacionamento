@@ -31,10 +31,10 @@ class Mensalidades extends CI_Controller{
 			),
 			'mensalidades' => $this->mensalidades_model->get_all()
 		);
-		echo '<pre>';
-		print_r($data['mensalidades']);
-		echo '</pre>';
-		exit;
+		// echo '<pre>';
+		// print_r($data['mensalidades']);
+		// echo '</pre>';
+		// exit;
 		$this->load->view('layout/header', $data);
 		$this->load->view('mensalidades/index');
 		$this->load->view('layout/footer');
