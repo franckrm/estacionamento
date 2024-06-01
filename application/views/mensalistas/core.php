@@ -129,7 +129,7 @@
 								<div class="form-group row">
 									<div class="col-md-2 mb-20">
 										<label>Ativo</label>
-										<select class="form-control" name="active">
+										<select class="form-control" name="mensalista_ativo">
 											<?php if (isset($mensalista)) :  ?>
 												<option value="0" <?php echo ($mensalista->mensalista_ativo == 0 ? 'selected' : '') ?>>Não</option>
 												<option value="1" <?php echo ($mensalista->mensalista_ativo == 1 ? 'selected' : '') ?>>Sim</option>
