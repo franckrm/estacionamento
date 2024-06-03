@@ -70,14 +70,6 @@ class Mensalistas extends CI_Controller
             
             if($this->form_validation->run()){
                 
-                $mensalista_ativo = $this->input->post('mensalista_ativo');
-                    if($mensalista_ativo==0){
-                        if($this->db->table_exists('mensalidades') ){
-                            if($this->core_model->get_by_id('mensalidades', array('mensalidade_mensalista_id'=> $mensalista_id, 'mensalidade_status'=>0))){
-                                $this->session->set_flashdata('error', 'Mensalista com débitos pedentes não pode ser desativado');
-                            }
-                        }
-                    }
                 $data = elements(array(
                     'mensalista_nome',
                     'mensalista_sobrenome',
@@ -162,14 +154,17 @@ class Mensalistas extends CI_Controller
                 
                 if($this->form_validation->run()){
                    //Editando 
-                   $preficicacao_ativa = $this->input->post('precificacao_ativa');
-                    if($preficicacao_ativa==0){
-                        if($this->db->table_exists('estacionar') ){
-                            if($this->core_model->get_by_id('estacionar', array('estacionar_precificacao_id'=> $precificacao_id, 'estacionar_status'=>0))){
-                                $this->session->set_flashdata('error', 'Esta categoria está sendo utilizada em Estacionar');
+                   $mensalista_ativo = $this->input->post('mensalista_ativo');
+
+                    if($mensalista_ativo==0){
+                        if($this->db->table_exists('mensalidades')){
+                            if($this->core_model->get_by_id('mensalidades', array('mensalidade_mensalista_id'=> $mensalista_id, 'mensalidade_status'=>0))){
+                                $this->session->set_flashdata('error', 'Existe <i class="fas fa-hand-holding-usd"></i> mensalidade em aberto para esse mensalista');
+                                redirect($this->router->fetch_class());
                             }
                         }
                     }
+                   
                     $data = elements(array(
                         'mensalista_nome',
                         'mensalista_sobrenome',

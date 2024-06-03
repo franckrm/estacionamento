@@ -91,18 +91,30 @@ class Precificacoes extends CI_Controller
                 $this->session->set_flashdata('error', 'Precificação não encontrada');
                 redirect($this->router->fetch_class());
             }else{
-
+  
                 $this->form_validation->set_rules('precificacao_categoria', 'Categoria', 'trim|required|min_length[5]|max_length[35]|callback_check_categoria');
                 $this->form_validation->set_rules('precificacao_valor_hora', 'Valor hora', 'trim|required|max_length[50]');
                 $this->form_validation->set_rules('precificacao_valor_mensalidade', 'Valor mensalidade', 'trim|required|max_length[50]');
                 $this->form_validation->set_rules('precificacao_numero_vagas', 'Número vagas', 'trim|required|integer|greater_than[0]');
                 
                 if($this->form_validation->run()){
+
                     $preficicacao_ativa = $this->input->post('precificacao_ativa');
+
                     if($preficicacao_ativa==0){
                         if($this->db->table_exists('estacionar') ){
                             if($this->core_model->get_by_id('estacionar', array('estacionar_precificacao_id'=> $precificacao_id, 'estacionar_status'=>0))){
-                                $this->session->set_flashdata('error', 'Esta categoria está sendo utilizada em Estacionar');
+                                $this->session->set_flashdata('error', 'Esta categoria está sendo utilizada em <i class="fas fa-parking"></i> Estacionar');
+                                redirect($this->router->fetch_class());
+                            }
+                        }
+                    }
+
+                    if($preficicacao_ativa==0){
+                        if($this->db->table_exists('mensalidades') ){
+                            if($this->core_model->get_by_id('mensalidades', array('mensalidade_precificacao_id'=> $precificacao_id, 'mensalidade_status'=>0))){
+                                $this->session->set_flashdata('error', 'Esta categoria está sendo utilizada em <i class="fas fa-hand-holding-usd"></i> Mensalidades');
+                                redirect($this->router->fetch_class());
                             }
                         }
                     }

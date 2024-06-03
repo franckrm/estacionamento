@@ -41,4 +41,47 @@ class Mensalidades extends CI_Controller{
 	}
 
 
+    public function core($mensalidade_id = null)
+	{
+        if(!$mensalidade_id){
+            //Cadastrando
+        }else{
+            if(!$this->core_model->get_by_id('mensalidades', array('mensalidade_id'=>$mensalidade_id))){
+                $this->session->set_flashdata('error', 'Mensalidade não encontrada');
+                redirect($this->router->fetch_class());
+            }else{
+              
+                $data = array(
+                    'titulo' => 'Editar mensalidade',
+                    'sub_titulo' => 'Chegou a hora de editar a mensalidade',
+                    'icone_view' => 'fas fa-hand-holding-usd',
+                    'texto_modal' => 'Os dados estão corretos? </br></br>Depois que salvar só será possível alterar a "Categoria do veículo"',
+                    'styles' => array(
+                        'plugins/select2/dist/css/select2.min.css'
+                    ),
+                    'scripts'=>array(
+                        'plugins/mask/jquery.mask.min.js',
+                        'plugins/mask/custom.js',
+                        'plugins/select2/dist/js/select2.min.js',
+                        'js/mensalidades/mensalidades.js'
+                    ),
+                    'precificacoes' => $this->core_model->get_all('precificacoes',array('precificacao_ativa' =>1)),
+                    'mensalistas' => $this->core_model->get_all('mensalistas',array('mensalista_ativo' =>1)),
+                    'mensalidade' => $this->core_model->get_by_id('mensalidades', array('mensalidade_id'=>$mensalidade_id))
+                );
+                // echo '<pre>';
+                // print_r($data['mensalidades']);
+                // echo '</pre>';
+                // exit;
+                $this->load->view('layout/header', $data);
+                $this->load->view('mensalidades/core');
+                $this->load->view('layout/footer');
+
+            }
+        }
+
+		
+	}
+
+
 }
