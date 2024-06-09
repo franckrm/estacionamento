@@ -30,11 +30,10 @@
 					</div>
 				</div>
 			</div>
-
-
+            
 			<div class="row">
 				<div class="col-md-12">
-					<div class="card">
+					<div class="card"> 
 						<div class="card-header"><?php echo (isset($mensalidade) ? '<i class="ik ik-calendar ik-2x"></i>Data da última alteração: ' . formata_data_banco_com_hora($mensalidade->mensalidade_data_alteracao) : '') ?></div>
 						<div class="card-body">
                             <form class="forms-sample" name="form_core" method="post">
@@ -162,7 +161,7 @@
                                 <a href="<?php echo base_url($this->router->fetch_class()); ?>" class="btn btn-light">Voltar</a>
 
                                 <div class="modal fade" id="mensalidade" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="demoModalLabel"><i class="ik ik-alert-octagon text-danger"></i>&nbsp;&nbsp;Confirmação de dados!</h5>
