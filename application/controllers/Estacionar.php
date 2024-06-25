@@ -31,10 +31,10 @@ class Estacionar extends CI_Controller{
 			),
 			'estacionados' => $this->estacionar_model->get_all()
 		);
-		echo '<pre>';
-		print_r($data['estacionados']);
-		echo '</pre>';
-		exit;
+		// echo '<pre>';
+		// print_r($data['estacionados']);
+		// echo '</pre>';
+		// exit;
 		$this->load->view('layout/header', $data);
 		$this->load->view('estacionar/index');
 		$this->load->view('layout/footer');
