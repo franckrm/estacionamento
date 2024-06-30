@@ -48,30 +48,69 @@ class Estacionar extends CI_Controller{
         }else{
             if(!$this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id))){
                 $this->session->set_flashdata('error','Ticket não encontrado para encerramento');
-                redirect($this->router->fetch_class);
+                redirect($this->router->fetch_class());
             }else{
                 //Encerramento do ticket
-                $data = array(
-                    'titulo' => 'Encerrando ticket',
-                    'sub_titulo' => 'Chegou a hora de encerrar o ticket de estacionamentos',
-                    'texto_modal' => 'Tem certeza que deseja encerrar esse Ticket?',
-                    'icone_view' => 'fas fa-parking',
-                    'scripts'=>array(
-                        'plugins/mask/jquery.mask.min.js',
-                        'plugins/mask/custom.js',
-                        'js/estacionar/estacionar.js'
-                    ),
-                    'estacionado' => $this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id)),
-                    'precificacoes' => $this->core_model->get_all('precificacoes', array('precificacao_ativa' => 1)),
-                    'formas_pagamentos' => $this->core_model->get_all('formas_pagamentos', array('forma_pagamento_ativa' => 1))
-                );
-                // echo '<pre>';
-                // print_r($data['precificacoes']);
-                // echo '</pre>';
-                // exit;
-                $this->load->view('layout/header', $data);
-                $this->load->view('estacionar/core');
-                $this->load->view('layout/footer');
+
+                $estacionar_tempo_decorrido = str_replace('.', '', $this->input->post('estacionar_tempo_decorrido'));
+
+                //Tornado a forma de pagamento obrigatório se o tempo decorrido for maior de 15 minutos
+                if($estacionar_tempo_decorrido > '015'){
+                    $this->form_validation->set_rules('estacionar_forma_pagamento_id', "Forma de pagamento", "required");
+                }
+
+                if($this->form_validation->run()){
+
+                    $data = elements(
+                        array(
+                            'estacionar_valor_devido',
+                            'estacionar_forma_pagamento_id',
+                            'estacionar_tempo_decorrido',
+
+                        ), $this->input->post()
+                    );
+
+                    if($estacionar_tempo_decorrido <=015){
+                        $data['estacionar_forma_pagamento_id'] = 5; //Forma de pagamento grátis
+                    }
+
+                    $data['estacionar_data_saida'] = date('Y-m-d H:m:s');
+                    $data['estacionar_status'] = 1; //Encerrando ticket de estacionamento
+
+                    $data = html_escape($data);
+
+                    $this->core_model->update('estacionar', $data, array('estacionar_id' => $estacionar_id));
+                    redirect($this->router->fetch_class());
+
+                    //Criar método imprimir
+
+                }else{
+                    //Erro de validação
+                    $data = array(
+                        'titulo' => 'Encerrando ticket',
+                        'sub_titulo' => 'Chegou a hora de encerrar o ticket de estacionamentos',
+                        'texto_modal' => 'Tem certeza que deseja encerrar esse Ticket?',
+                        'icone_view' => 'fas fa-parking',
+                        'scripts'=>array(
+                            'plugins/mask/jquery.mask.min.js',
+                            'plugins/mask/custom.js',
+                            'js/estacionar/estacionar.js'
+                        ),
+                        'estacionado' => $this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id)),
+                        'precificacoes' => $this->core_model->get_all('precificacoes', array('precificacao_ativa' => 1)),
+                        'formas_pagamentos' => $this->core_model->get_all('formas_pagamentos', array('forma_pagamento_ativa' => 1))
+                    );
+                    // echo '<pre>';
+                    // print_r($data['precificacoes']);
+                    // echo '</pre>';
+                    // exit;
+                    $this->load->view('layout/header', $data);
+                    $this->load->view('estacionar/core');
+                    $this->load->view('layout/footer');
+                }
+
+               
+               
 
             }
         }

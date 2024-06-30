@@ -190,7 +190,7 @@
                                 <?php endif; ?>
 
                                 <?php if (isset($estacionado) && $estacionado->estacionar_status == 1): ?>
-                                    <button type="submit" class="btn btn-success mr-2 disabled" value="" disabled>Salvar</button>
+                                    <button type="submit" class="btn btn-success mr-2 disabled" value="" disabled>Encerrado</button>
                                 <?php else: ?>
                                     <a title="Cadastrar ordem de estacionamento" href="javascript:void(0)" class="btn btn btn-primary mr-2" data-toggle="modal" data-target="#cadastrar">Encerrar</i></a>                            
                                 <?php endif; ?>
