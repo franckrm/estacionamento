@@ -76,7 +76,7 @@
 										<td><?php echo $estacionado->precificacao_categoria; ?></td>
                                         <td><?php echo "R$ ".$estacionado->precificacao_valor_hora; ?></td>
                                         <td><?php echo $estacionado->estacionar_placa_veiculo; ?></td>
-                                        <td><?php echo $estacionado->forma_pagamento_nome; ?></td>
+                                        <td><?php echo $estacionado->estacionar_status == 1 ? $estacionado->forma_pagamento_nome : 'Em aberto';?></td>
 										<td><?php echo ($estacionado->estacionar_status == 1?'<span class="badge badge-pill badge-success mb-1">Paga</span>' : '<span class="badge badge-pill badge-warning mb-1">Em aberto</span>'); ?></td>
 										<td class="text-right">
 											<a data-toggle="tooltip" data-placement="bottom" title="<?php echo ($estacionado->estacionar_status == 1) ? 'Visualizar' : 'Encerrar' ?> ticket" href="<?php echo base_url($this->router->fetch_class().'/core/'.$estacionado->estacionar_id)?>" class="btn btn-icon btn-primary"><i class="<?php echo ($estacionado->estacionar_status == 1) ? 'ik ik-eye' : 'ik ik-edit-2' ?>"></i></a>

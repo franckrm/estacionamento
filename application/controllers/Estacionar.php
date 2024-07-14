@@ -48,34 +48,30 @@ class Estacionar extends CI_Controller{
 
             $this->form_validation->set_rules('estacionar_precificacao_id', 'Categoria', 'required');
             $this->form_validation->set_rules('estacionar_numero_vaga', 'Número da vaga', 'required|integer|greater_than[0]|callback_check_vaga_ocupada|callback_check_range_vagas_categoria');
-            $this->form_validation->set_rules('estacionar_placa_veiculo', 'Placa veículo', 'required|exact_length[0]|check_placa_status_aberta');
-
+            $this->form_validation->set_rules('estacionar_placa_veiculo', 'Placa veículo', 'required|exact_length[8]|callback_check_placa_status_aberta');
+            $this->form_validation->set_rules('estacionar_marca_veiculo', 'Marca veículo', 'required|min_length[2]|max_length[30]');
+            $this->form_validation->set_rules('estacionar_modelo_veiculo', 'Modelo veículo', 'required|min_length[2]|max_length[20]');
 
             if($this->form_validation->run()){
 
-                echo "<pre>";
-                print_r($this->input->post());
-                exit();
-
                 $data = elements(
                     array(
-                        'estacionar_valor_devido',
-                        'estacionar_forma_pagamento_id',
-                        'estacionar_tempo_decorrido',
+                        'estacionar_valor_hora',
+                        'estacionar_numero_vaga',
+                        'estacionar_placa_veiculo',
+                        'estacionar_marca_veiculo',
+                        'estacionar_modelo_veiculo',
 
                     ), $this->input->post()
                 );
 
-                if($estacionar_tempo_decorrido <=015){
-                    $data['estacionar_forma_pagamento_id'] = 5; //Forma de pagamento grátis
-                }
 
-                $data['estacionar_data_saida'] = date('Y-m-d H:m:s');
-                $data['estacionar_status'] = 1; //Encerrando ticket de estacionamento
+                $data['estacionar_precificacao_id'] = intval(substr($this->input->post('estacionar_precificacao_id'), 0, 1));
+                $data['estacionar_status'] = 0; //Ao cadastrar ticket, o valor de 'estacionar_status' fica como '0' 
 
                 $data = html_escape($data);
     
-                $this->core_model->update('estacionar', $data, array('estacionar_id' => $estacionar_id));
+                $this->core_model->insert('estacionar', $data);
                 redirect($this->router->fetch_class());
 
                 //Criar método imprimir
