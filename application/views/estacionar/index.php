@@ -79,7 +79,7 @@
                                         <td><?php echo $estacionado->forma_pagamento_nome; ?></td>
 										<td><?php echo ($estacionado->estacionar_status == 1?'<span class="badge badge-pill badge-success mb-1">Paga</span>' : '<span class="badge badge-pill badge-warning mb-1">Em aberto</span>'); ?></td>
 										<td class="text-right">
-											<a data-toggle="tooltip" data-placement="bottom" title="<?php echo ($estacionado->estacionar_status == 1) ? 'Visualizar' : 'Editar' ?> ticket" href="<?php echo base_url($this->router->fetch_class().'/core/'.$estacionado->estacionar_id)?>" class="btn btn-icon btn-primary"><i class="<?php echo ($estacionado->estacionar_status == 1) ? 'ik ik-eye' : 'ik ik-edit-2' ?>"></i></a>
+											<a data-toggle="tooltip" data-placement="bottom" title="<?php echo ($estacionado->estacionar_status == 1) ? 'Visualizar' : 'Encerrar' ?> ticket" href="<?php echo base_url($this->router->fetch_class().'/core/'.$estacionado->estacionar_id)?>" class="btn btn-icon btn-primary"><i class="<?php echo ($estacionado->estacionar_status == 1) ? 'ik ik-eye' : 'ik ik-edit-2' ?>"></i></a>
 											<button  type="button" title="Excluir <?php echo $this->router->fetch_class();?>" class="btn btn-icon btn-danger"  data-toggle="modal" data-target="#estacionado-<?php echo $estacionado->estacionar_id ?>"><i class="ik ik-trash-2"></i></button> 
 											
 										</td>
