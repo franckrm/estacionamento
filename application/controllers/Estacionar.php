@@ -71,8 +71,11 @@ class Estacionar extends CI_Controller{
 
                 $data = html_escape($data);
     
-                $this->core_model->insert('estacionar', $data);
-                redirect($this->router->fetch_class());
+                $this->core_model->insert('estacionar', $data, true);
+
+                $estacionar_id = $this->session->userdata('last_id');
+
+                redirect($this->router->fetch_class().'/acoes/'.$estacionar_id);
 
                 //Criar método imprimir
 
@@ -90,10 +93,7 @@ class Estacionar extends CI_Controller{
                     ),
                     'precificacoes' => $this->core_model->get_all('precificacoes', array('precificacao_ativa' => 1))
                 );
-                // echo '<pre>';
-                // print_r($data['precificacoes']);
-                // echo '</pre>';
-                // exit;
+             
                 $this->load->view('layout/header', $data);
                 $this->load->view('estacionar/core');
                 $this->load->view('layout/footer');
@@ -138,7 +138,8 @@ class Estacionar extends CI_Controller{
                     $data = html_escape($data);
 
                     $this->core_model->update('estacionar', $data, array('estacionar_id' => $estacionar_id));
-                    redirect($this->router->fetch_class());
+                    redirect($this->router->fetch_class().'/acoes/'.$estacionar_id);
+
 
                     //Criar método imprimir
 
@@ -158,10 +159,7 @@ class Estacionar extends CI_Controller{
                         'precificacoes' => $this->core_model->get_all('precificacoes', array('precificacao_ativa' => 1)),
                         'formas_pagamentos' => $this->core_model->get_all('formas_pagamentos', array('forma_pagamento_ativa' => 1))
                     );
-                    // echo '<pre>';
-                    // print_r($data['precificacoes']);
-                    // echo '</pre>';
-                    // exit;
+                    
                     $this->load->view('layout/header', $data);
                     $this->load->view('estacionar/core');
                     $this->load->view('layout/footer');
@@ -227,6 +225,24 @@ class Estacionar extends CI_Controller{
         } else {
 
             return TRUE;
+        }
+    }
+
+    public function acoes($estacionar_id = null){
+        if(!$this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id))){
+            $this->session->set_flashdata('error','Ticket não encontrado');
+            redirect($this->router->fetch_class());
+        }else{
+            $data = array(
+                'titulo' => 'O que você gostaria de fazer',
+                'sub_titulo' => 'Por favor, escolha uma das opções a seguir',
+                'icone_view' => 'fas fa-question',
+                'estacionado' => $this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id))
+            );
+        
+            $this->load->view('layout/header', $data);
+            $this->load->view('estacionar/acoes');
+            $this->load->view('layout/footer');
         }
     }
 
