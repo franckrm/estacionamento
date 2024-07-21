@@ -246,4 +246,81 @@ class Estacionar extends CI_Controller{
         }
     }
 
+    public function pdf($estacionar_id = null){
+        if(!$estacionar_id || !$this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id))){
+            $this->session->set_flashdata('error','Ticket não encontrado para impressão');
+            redirect($this->router->fetch_class());
+        }else{
+            $this->load->library('pdf');
+            $this->load->model('estacionar_model');
+
+            $empresa = $this->core_model->get_by_id('sistema', array('sistema_id'=>1));
+
+            $ticket =  $this->estacionar_model->get_by_id($estacionar_id);
+
+            // echo '<pre>';
+            // print_r($ticket);
+            // exit();
+
+            $fileName = 'Ticket - Placa_'.$ticket->estacionar_placa_veiculo;
+
+            $html = '<html style="font-size:10px">';
+            $html .= '<head>';
+            $html .= '<title>'.$empresa->sistema_razao_social.'</title>';
+            $html .= '</head>';
+
+            $html .= '<body>';
+
+            /*Dados empresa*/
+
+            $html .= '<h5 align="center" style="font-size:10px">
+                 '.$empresa->sistema_nome_fantasia.'<br/>  
+                 CNPJ: '.$empresa->sistema_cnpj.'<br/>  
+             '   .$empresa->sistema_endereco.'-'.$empresa->sistema_numero.'<br/>  
+                 '.$empresa->sistema_cep.'<br/>  
+                 '.$empresa->sistema_cidade.'<br/>   
+                 '.$empresa->sistema_telefone_fixo.'<br/>   
+                  '.$empresa->sistema_email.'<br/>   
+                    </h5>';
+
+            $html.= '<hr>';
+
+            $dados_saida ='';
+
+            if($ticket->estacionar_status == 1){
+                $dados_saida = '<strong>Data saída:</strong>'.formata_data_banco_com_hora($ticket->estacionar_data_saida)."<br/>"
+                                .'<strong>Tempo decorrido (hh:mm): </strong>'.$ticket->estacionar_tempo_decorrido."<br/>"
+                                .'<strong>Valor pago: R$ </strong>'.$ticket->estacionar_valor_devido."<br/>"
+                                .'<strong>Forma de pagamento:</strong>'.$ticket->forma_pagamento_nome."<br/>";
+            }
+
+            //Dados do ticket
+
+            $html .= '<p align="right">Ticket Nº: '.$ticket->estacionar_id.'</p><br>';
+
+            $html .= '<p>'
+                    .'<strong>Placa veículo: </strong>'.$ticket->estacionar_placa_veiculo."<br/>"
+                    .'<strong>Marca veículo: </strong>'.$ticket->estacionar_marca_veiculo."<br/>"
+                    .'<strong>Categoria veículo: </strong>'.$ticket->precificacao_categoria."<br/>"
+                    .'<strong>Número da vaga: </strong>'.$ticket->estacionar_numero_vaga."<br/>"
+                    .'<strong>Data entrada: </strong>'.formata_data_banco_com_hora($ticket->estacionar_data_entrada)."<br/>"
+                    .$dados_saida
+                    .'</p>';
+
+            $html .= '<hr>';
+             
+            $html .= '<h5 align="center" style="font-size:10px">
+            '.$empresa->sistema_nome_fantasia.'<br/>  
+             '.$empresa->sistema_texto_ticket.'<br/>  
+             '.date('d/m/Y H:i:s').'<br/>   
+               </h5>';
+
+            $this->pdf->createPDF($html, $fileName, false);
+
+            $html.= '</html>';
+            $html.= '</body>';
+
+            echo $html;
+        }
+    }
 }

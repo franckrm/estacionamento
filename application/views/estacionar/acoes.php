@@ -49,7 +49,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">Impressão do ticket</h6>
-                                    <a class="btn bg-blue text-white" href="<?php //echo base_url(redirect($this->router->fetch_class().'/pdf/'.$estacionar_id)); ?>">Imprimir</a>
+                                    <a class="btn bg-blue text-white" href="<?php echo base_url($this->router->fetch_class().'/pdf/'.$estacionado->estacionar_id); ?>">Imprimir</a>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-print bg-blue"></i>
@@ -64,7 +64,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">Listar tickets</h6>
-                                    <a class="btn bg-green text-white" href="<?php //echo base_url(redirect($this->router->fetch_class())); ?>">Listar</a>
+                                    <a class="btn bg-green text-white" href="<?php echo base_url($this->router->fetch_class()); ?>">Listar</a>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-list-ol bg-green"></i>
@@ -79,7 +79,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">Novo ticket</h6>
-                                    <a class="btn bg-yellow text-white" href="<?php //echo base_url(redirect($this->router->fetch_class())); ?>">Novo</a>
+                                    <a class="btn bg-yellow text-white" href="<?php echo base_url($this->router->fetch_class().'/core/'); ?>">Novo</a>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-plus bg-yellow"></i>
