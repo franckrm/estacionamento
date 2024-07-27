@@ -115,6 +115,8 @@ class Estacionar extends CI_Controller{
                 //Tornado a forma de pagamento obrigatório se o tempo decorrido for maior de 15 minutos
                 if($estacionar_tempo_decorrido > '015'){
                     $this->form_validation->set_rules('estacionar_forma_pagamento_id', "Forma de pagamento", "required");
+                }else{
+                    $this->form_validation->set_rules('estacionar_forma_pagamento_id', "Forma de pagamento", "trim");
                 }
 
                 if($this->form_validation->run()){
@@ -258,10 +260,6 @@ class Estacionar extends CI_Controller{
 
             $ticket =  $this->estacionar_model->get_by_id($estacionar_id);
 
-            // echo '<pre>';
-            // print_r($ticket);
-            // exit();
-
             $fileName = 'Ticket - Placa_'.$ticket->estacionar_placa_veiculo;
 
             $html = '<html style="font-size:10px">';
@@ -323,4 +321,21 @@ class Estacionar extends CI_Controller{
             echo $html;
         }
     }
+
+    public function del($estacionar_id = null){
+        if(!$estacionar_id || !$this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id))){
+            $this->session->set_flashdata('error','Ticket não encontrado para exclusão');
+            redirect($this->router->fetch_class());
+        }
+
+        if($this->core_model->get_by_id('estacionar', array('estacionar_id' => $estacionar_id, 'estacionar_status' => 0))){
+            $this->session->set_flashdata('error','Esse ticket não pode ser excluído, pois está em aberto');
+            redirect($this->router->fetch_class());
+        }
+
+        $this->core_model->delete('estacionar', array('estacionar_id'=> $estacionar_id));
+        redirect($this->router->fetch_class());
+    }
+
+
 }
