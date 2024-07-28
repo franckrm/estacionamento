@@ -22,14 +22,20 @@ class Estacionar extends CI_Controller{
 			'sub_titulo' => 'Chegou a hora de listar os tickets de estacionamentos',
             'icone_view' => 'fas fa-parking',
 			'styles' => array(
-				'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css'
+				'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
+                'dist/css/estacionar.css'
 			),
 			'scripts' => array(
 				'plugins/datatables.net/js/jquery.dataTables.min.js',
 				'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
 				'plugins/datatables.net/js/estacionamento.js',
 			),
-			'estacionados' => $this->estacionar_model->get_all()
+			'estacionados' => $this->estacionar_model->get_all(),
+            /*Inicio numero vagas por categoria*/
+            'numero_vagas_pequeno' =>$this->estacionar_model->get_numero_vagas(1), //Veículo pequeno
+            'numero_vagas_medio' =>$this->estacionar_model->get_numero_vagas(2), //Veículo médio
+            'numero_vagas_grande' =>$this->estacionar_model->get_numero_vagas(3), //Veículo grande
+            'numero_vagas_moto' =>$this->estacionar_model->get_numero_vagas(4) //Veículo moto
 		);
 		// echo '<pre>';
 		// print_r($data['estacionados']);

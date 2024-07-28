@@ -40,4 +40,14 @@ class Estacionar_model extends CI_Model{
         return $this->db->get('estacionar')->row();
          
     } 
+
+    public function get_numero_vagas($precificacao_id = null){
+        $this->db->select('precificacao_ativa');
+        $this->db->select('precificacao_numero_vagas as vagas');
+
+        $this->db->where('precificacao_id', $precificacao_id);
+
+        return $this->db->get('precificacoes')->row();
+        
+    }
 }

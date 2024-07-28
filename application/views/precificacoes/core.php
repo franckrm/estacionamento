@@ -59,7 +59,7 @@
 
                                     <div class="col-md-2 mb-20">
 										<label>Número vagas</label>
-										<input type="number" class="form-control money" name="precificacao_numero_vagas" value="<?php echo (isset($precificacao) ? $precificacao->precificacao_numero_vagas : set_value('precificacao_numero_vagas')) ?>">
+										<input type="number" class="form-control" name="precificacao_numero_vagas" value="<?php echo (isset($precificacao) ? $precificacao->precificacao_numero_vagas : set_value('precificacao_numero_vagas')) ?>">
 										<?php echo form_error('precificacao_numero_vagas', '<div class="text-danger">', '</div>'); ?>
 									</div>
 
