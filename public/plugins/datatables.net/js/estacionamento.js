@@ -37,6 +37,7 @@ $(document).ready(function() {
         'aoColumnDefs': [{
             'bSortable': false,
             'aTargets': ['nosort']
-        }]
+        }],
+        "lengthMenu" : [3, 10, 25, 50, 75, 100]
     });
 });
