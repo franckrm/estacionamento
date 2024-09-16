@@ -41,9 +41,26 @@ class Home extends CI_Controller {
             'numero_vagas_moto' =>$this->estacionar_model->get_numero_vagas(4), //Veículo moto
             'vagas_ocupadas_moto' => $this->core_model->get_all('estacionar', array('estacionar_status' =>0, 'estacionar_precificacao_id' =>4)),
 
+
+
+            //Informações dos cards
+            'numero_total_vagas' => $this->home_model->get_total_vagas(),
+            'total_estacionados_agora'=> $this->home_model->count_all('estacionar', array('estacionar_status'=>0)),
+            
+            'total_mensalidades' => $this->home_model->get_total_mensalidades(),
+            'total_mensalidades_pagas'=> $this->home_model->count_all('mensalidades', array('mensalidade_status'=>1)),
+            'total_mensalidades_abertas'=> $this->home_model->count_all('mensalidades', array('mensalidade_status'=>0)),
+
+            'total_avulsos' => $this->home_model->get_total_avulsos(),
+            'total_avulsos_pagos'=> $this->home_model->count_all('estacionar', array('estacionar_status'=>1)),
+            'total_avulsos_abertos'=> $this->home_model->count_all('estacionar', array('estacionar_status'=>0)),
+
+            'total_mensalistas' => $this->home_model->count_all('mensalistas'),
+            'total_mensalistas_ativos' => $this->home_model->count_all('mensalistas', array('mensalista_ativo'=>1)),
+            'total_mensalistas_inativos' => $this->home_model->count_all('mensalistas', array('mensalista_ativo'=>0)),
 		);
 		// echo '<pre>';
-		// print_r($data['estacionados']);
+		// print_r($data['total_mensalistas']);
 		// echo '</pre>';
 		// exit;
 		$this->load->view('layout/header', $data);
