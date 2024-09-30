@@ -27,6 +27,7 @@ class Home extends CI_Controller {
 				'plugins/datatables.net/js/jquery.dataTables.min.js',
 				'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
 				'plugins/datatables.net/js/estacionamento.js',
+                'dist/js/util.js',
 			),
             /*Inicio numero vagas por categoria*/
             'numero_vagas_pequeno' =>$this->estacionar_model->get_numero_vagas(1), //Veículo pequeno
@@ -59,6 +60,40 @@ class Home extends CI_Controller {
             'total_mensalistas_ativos' => $this->home_model->count_all('mensalistas', array('mensalista_ativo'=>1)),
             'total_mensalistas_inativos' => $this->home_model->count_all('mensalistas', array('mensalista_ativo'=>0)),
 		);
+
+        //Central de notificações
+
+        $notificacoes = 0;
+
+        if($this->home_model->get_mensalidades_vencidas()){
+            $data['mensalidades_vencidas'] =true;
+            $notificacoes++;
+        }
+
+        if($this->core_model->get_by_id('precificacoes', array('precificacao_ativa' => 0))){
+            $data['preficicacoes_inativas'] =true;
+            $notificacoes++;
+        }
+
+        if($this->core_model->get_by_id('formas_pagamentos', array('forma_pagamento_ativa' => 0))){
+            $data['formas_inativas'] =true;
+            $notificacoes++;
+        }
+
+        if($this->core_model->get_by_id('users', array('active' => 0))){
+            $data['usuarios_inativos'] =true;
+            $notificacoes++;
+        }
+
+        if($this->core_model->get_by_id('mensalistas', array('mensalista_ativo' => 0))){
+            $data['mensalistas_inativos'] =true;
+            $notificacoes++;
+        }
+
+        if($notificacoes > 0){
+            $data['notificacoes'] = $notificacoes;
+        }
+
 		// echo '<pre>';
 		// print_r($data['total_mensalistas']);
 		// echo '</pre>';
