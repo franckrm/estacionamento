@@ -16,6 +16,12 @@ class Usuarios extends CI_Controller
 	public function index()
 	{
 
+
+        if(!$this->ion_auth->is_admin()){
+            $this->session->set_flashdata('info', 'Você não tem permissão para acessar esse Menu');
+            redirect('/');
+        }
+
 		$data = array(
 			'titulo' => 'Usuarios cadastrados',
 			'sub_titulo' => 'Chegou a hora de listar os usuários cadastrados no banco de dados',
@@ -45,6 +51,11 @@ class Usuarios extends CI_Controller
 
 		if (!$usuario_id) {
 			//Cadastro de novo usuário
+
+            if(!$this->ion_auth->is_admin()){
+                $this->session->set_flashdata('info', 'Você não tem permissão para acessar esse Menu');
+                redirect('/');
+            }
 			
 			$this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[3]|max_length[20]');
 			$this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[3]|max_length[20]');
@@ -98,26 +109,22 @@ class Usuarios extends CI_Controller
 			} else {
 				//Editar usuário
 
+                if($this->session->userdata('user_id')!= $usuario_id && !$this->ion_auth->is_admin()){
+                    $this->session->set_flashdata('error', 'Você não pode editar um usuário diferente do seu');
+                    redirect('/');
+                }
+
 				$perfil_atual = $this->ion_auth->get_users_groups($usuario_id)->row();
 				
 				$this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[3]|max_length[20]');
-				$this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[3|max_length[20]');
+				$this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[3]|max_length[20]');
 				$this->form_validation->set_rules('username', 'Usuário', 'trim|required|min_length[3]|max_length[30]|callback_username_check');
 				$this->form_validation->set_rules('email', 'E-mail', 'trim|valid_email|required|min_length[5]|max_length[200]|callback_email_check');
 				$this->form_validation->set_rules('password', 'Senha', 'trim|min_length[8]');
 				$this->form_validation->set_rules('confirmacao', 'Confirmação', 'trim|matches[password]');
 
 				if ($this->form_validation->run()) {
-					// [first_name] => Admin
-					// [last_name] => istrator
-					// [username] => administrator
-					// [email] => admin@admin.com
-					// [password] => 
-					// [confirmacao] => 
-					// [perfil] => 1
-					// [active] => 1
-					// [usuario_id] => 1
-
+					
 					$data = elements(
 						array(
 							'first_name',
@@ -130,6 +137,9 @@ class Usuarios extends CI_Controller
 						$this->input->post() 
 					);
 
+                    if(!$this->ion_auth->is_admin()){
+                        unset($data['active']);
+                    }
 					$password = $this->input->post('password');
 
 					//Não atualiza a senha
@@ -142,21 +152,26 @@ class Usuarios extends CI_Controller
 					if($this->ion_auth->update($usuario_id, $data)){
 
 						$perfil_post = $this->input->post('perfil');
-						//Se for diferente atualiza o grupo
-						if($perfil_atual->id != $perfil_post){
-							$this->ion_auth->remove_from_group($perfil_atual->id, $usuario_id);
-							$this->ion_auth->add_to_group($perfil_post, $usuario_id);
-						}
+						
+                        //Se foi passado o 'perfil' então é admin
+						if($perfil_post){
+                            //Se for diferente atualiza o grupo
+                            if($perfil_atual->id != $perfil_post){
+                                $this->ion_auth->remove_from_group($perfil_atual->id, $usuario_id);
+                                $this->ion_auth->add_to_group($perfil_post, $usuario_id);
+                            }
+                        }
 
 						$this->session->set_flashdata('sucesso', 'Dados atualizados com sucesso');
 					}else{
 						$this->session->set_flashdata('error', 'Não foi possível atualizar os dados');
 					}
 
+                    if(!$this->ion_auth->is_admin()){
+                        redirect('/');
+                    }
+
 					redirect($this->router->fetch_class());
-
-
-					print_r($data);
 				} else {
 					//Erro da validação
 

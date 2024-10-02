@@ -92,7 +92,7 @@
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-user ik-2x"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                    <a data-toggle="tooltip" data-placement="left" title="Gerenciar seu perfil" class="dropdown-item" href="profile.html"><i class="ik ik-user dropdown-icon"></i> Profile</a>
+                                    <a data-toggle="tooltip" data-placement="left" title="Gerenciar seu perfil" class="dropdown-item" href="<?php echo base_url('usuarios/core/'.$this->session->userdata('user_id')); ?>"><i class="ik ik-user dropdown-icon"></i> Profile</a>
                                     <a data-toggle="tooltip" data-placement="left" title="Encessar a sessão" class="dropdown-item" href="<?php echo base_url('login/logout')?>"><i class="ik ik-power dropdown-icon"></i> Sair</a>
                                 </div>
                             </div>
