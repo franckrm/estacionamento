@@ -102,8 +102,8 @@ class Mensalistas extends CI_Controller
 
                 //Erro de validação
                 $data = array(
-                    'titulo' => 'Editar mensalista',
-                    'sub_titulo' => 'Chegou a hora de editar o mensalista',
+                    'titulo' => 'Cadastrar mensalista',
+                    'sub_titulo' => 'Chegou a hora de cadastrar o mensalista',
                     'icone_view' => 'fas fa-users',
                     'scripts'=>array(
                         'plugins/mask/jquery.mask.min.js',
@@ -299,6 +299,12 @@ class Mensalistas extends CI_Controller
     }
 
     public function del($mensalista_id = null){
+
+        if(!$this->ion_auth->is_admin()){
+            $this->session->set_flashdata('info', 'Você não tem permissão para excluir Mensalistas');
+            redirect('/');
+        }
+
         if(!$mensalista_id || !$this->core_model->get_by_id('mensalistas', array('mensalista_id'=> $mensalista_id))){
             $this->session->set_flashdata('error', 'Mensalista não encontrada');
             redirect($this->router->fetch_class());
@@ -306,6 +312,11 @@ class Mensalistas extends CI_Controller
 
         if($this->core_model->get_by_id('mensalistas', array('mensalista_id'=> $mensalista_id, 'mensalista_ativo' => 1))){
             $this->session->set_flashdata('error', 'Não é possível excluir mensalista ativo');
+            redirect($this->router->fetch_class());
+        }
+
+        if($this->core_model->get_by_id('mensalidades', array('mensalidade_mensalista_id'=> $mensalista_id))){
+            $this->session->set_flashdata('error', 'Não é possível excluir esse mensalista, pois o mesmo está atrelado à  <i class="fas fa-hand-holding-usd"></i> Mensalidades');
             redirect($this->router->fetch_class());
         }
 

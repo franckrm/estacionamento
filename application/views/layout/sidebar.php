@@ -23,6 +23,10 @@
                 <div class="nav-item <?php echo ($this->router->fetch_class() =='mensalistas' && $this->router->fetch_method() == 'index' ? 'active' : '') ?>">
 					<a data-toggle="tooltip" data-placement="bottom" title="Gerenciar mensalistas" href="<?php echo base_url('mensalistas') ?>"><i class="fas fa-users"></i><span>Mensalistas</span></a>
 				</div>
+
+                <div class="nav-item <?php echo ($this->router->fetch_class() =='mensalidades' && $this->router->fetch_method() == 'index' ? 'active' : '') ?>">
+					<a data-toggle="tooltip" data-placement="bottom" title="Ger enciar mensalidades" href="<?php echo base_url('mensalidades') ?>"><i class="fas fa-hand-holding-usd"></i><span>Mensalidades</span></a>
+				</div>
 				
 				<div class="nav-lavel">Administração</div>
 				<div class="nav-item  <?php echo ($this->router->fetch_class() =='usuarios' && $this->router->fetch_method() == 'index' ? 'active' : '') ?>">
@@ -34,9 +38,7 @@
 				<div class="nav-item <?php echo ($this->router->fetch_class() =='precificacoes' && $this->router->fetch_method() == 'index' ? 'active' : '') ?>">
 					<a data-toggle="tooltip" data-placement="bottom" title="Gerenciar precificações" href="<?php echo base_url('precificacoes') ?>"><i class="ik ik-dollar-sign"></i><span>Precificações</span></a>
 				</div>
-                <div class="nav-item <?php echo ($this->router->fetch_class() =='mensalidades' && $this->router->fetch_method() == 'index' ? 'active' : '') ?>">
-					<a data-toggle="tooltip" data-placement="bottom" title="Ger enciar mensalidades" href="<?php echo base_url('mensalidades') ?>"><i class="fas fa-hand-holding-usd"></i><span>Mensalidades</span></a>
-				</div>
+               
                 <div class="nav-item <?php echo ($this->router->fetch_class() =='formas' && $this->router->fetch_method() == 'index' ? 'active' : '') ?>">
 					<a data-toggle="tooltip" data-placement="bottom" title="Gerenciar formas de pagamento" href="<?php echo base_url('formas') ?>"><i class="fas fa-comment-dollar"></i><span>Forças de Pagamento</span></a>
 				</div>

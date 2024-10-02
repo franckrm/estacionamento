@@ -222,6 +222,12 @@ class Usuarios extends CI_Controller
     }
 
 	public function del($usuario_id =null){
+
+        if(!$this->ion_auth->is_admin()){
+            $this->session->set_flashdata('error', 'Você não tem permissão para acessar esse Menu');
+            redirect('/');
+        }
+
 		if(!$usuario_id || !$this->core_model->get_by_id('users', array('id'=>$usuario_id))){
 			$this->session->set_flashdata('error', 'Usuário não encontrado.');
 			var_dump($this->session->flashdata('error'));

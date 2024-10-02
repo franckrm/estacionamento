@@ -233,6 +233,12 @@ class Mensalidades extends CI_Controller{
     }
 
     public function del($mensalidade_id = null){
+
+        if(!$this->ion_auth->is_admin()){
+            $this->session->set_flashdata('info', 'Você não tem permissão para excluir Mensalidades');
+            redirect('/');
+        }
+
         if(!$mensalidade_id || !$this->core_model->get_by_id('mensalidades', array('mensalidade_id'=>$mensalidade_id))){
             $this->session->set_flashdata('error', 'Mensalidade não encontrada');
             redirect($this->router->fetch_class());
