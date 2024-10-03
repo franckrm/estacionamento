@@ -158,8 +158,8 @@ class Mensalistas extends CI_Controller
 
                     if($mensalista_ativo==0){
                         if($this->db->table_exists('mensalidades')){
-                            if($this->core_model->get_by_id('mensalidades', array('mensalidade_mensalista_id'=> $mensalista_id, 'mensalidade_status'=>0))){
-                                $this->session->set_flashdata('error', 'Existe <i class="fas fa-hand-holding-usd"></i> mensalidade em aberto para esse mensalista');
+                            if($this->core_model->get_by_id('mensalidades', array('mensalidade_mensalista_id'=> $mensalista_id))){
+                                $this->session->set_flashdata('error', 'Não é possível desativar esse mensalista, pois o mesmo está atrelado à <i class="fas fa-hand-holding-usd"></i> Mensalidades');
                                 redirect($this->router->fetch_class());
                             }
                         }
