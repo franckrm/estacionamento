@@ -1,8 +1,8 @@
 <div class="app-sidebar colored">
 	<div class="sidebar-header">
-		<a class="header-brand" href="index.html">
+		<a data-toggle="tooltip" data-placement="bottom" title="Home"  class="header-brand" href="<?php echo base_url('/') ?>">
 			<div class="logo-img">
-				<img src="src/img/brand-white.svg" class="header-brand-img" alt="lavalite"> 
+				<img src="<?php echo base_url('public/src/img/brand-white.svg') ?>" class="header-brand-img" alt="lavalite"> 
 			</div>
 			<span class="text">ThemeKit</span>
 		</a>
@@ -41,7 +41,7 @@
                         <a data-toggle="tooltip" data-placement="bottom" title="Gerenciar precificações" href="<?php echo base_url('precificacoes') ?>"><i class="ik ik-dollar-sign"></i><span>Precificações</span></a>
                     </div>
                 <?php endif; ?>
-                
+
                 <div class="nav-item <?php echo ($this->router->fetch_class() =='formas' && $this->router->fetch_method() == 'index' ? 'active' : '') ?>">
 					<a data-toggle="tooltip" data-placement="bottom" title="Gerenciar formas de pagamento" href="<?php echo base_url('formas') ?>"><i class="fas fa-comment-dollar"></i><span>Forças de Pagamento</span></a>
 				</div>
