@@ -2,9 +2,9 @@
 	<div class="sidebar-header">
 		<a data-toggle="tooltip" data-placement="bottom" title="Home"  class="header-brand" href="<?php echo base_url('/') ?>">
 			<div class="logo-img">
-				<img src="<?php echo base_url('public/src/img/brand-white.svg') ?>" class="header-brand-img" alt="lavalite"> 
+				
 			</div>
-			<span class="text">ThemeKit</span>
+
 		</a>
 		<button type="button" class="nav-toggle"><i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>
 		<button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
